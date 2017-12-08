@@ -1,22 +1,15 @@
-/**
- * User - instanciate a user at a given index
- *
- * @param  {GameController} gameController the GameController instance
- * @param  {number} index          the index of the user
- * @param  {number} x              the x = numRow
- * @param  {number} y              the y = numColumn
- */
-function User(gameController, index, x, y) {
+
+function User(gameController, index, i, j) {
 	this.gc = gameController;
 	this.index = index;
-	this.x = x;
-	this.y = y;
+	this.x = i;
+	this.y = j;
 
 	this.domElm = qs('#user').cloneNode();
 	qs('#user').remove();
 	this.domElm.removeAttribute('hidden');
-	this.domElm.style.top = this.gc.factorY + (96 * this.y)+"px";
-	this.domElm.style.left = this.gc.factorX + (96 * this.x)+"px";
+	this.domElm.style.top = this.gc.factorY + (96 * j)+"px";
+	this.domElm.style.left = this.gc.factorX + (96 * i)+"px";
 
 
 	// keybindings
@@ -31,30 +24,23 @@ function User(gameController, index, x, y) {
 
 }
 
-
-/**
- * User.prototype.move - function to move the user
- *
- * @param  {String} mvt mouvement description like 'ArrowDown'
- */
+// TODO : add verification if we can move on the next block
 User.prototype.move = function(mvt){
 
 	var self = this;
 
 	var elm = qs('#user');
 
-	if(mvt == "ArrowDown"){
-		elm.setAttribute("src","./assets/userBottom.png"); // set the image to look down
+	if(mvt == "ArrowDown"){ // && self.gc.getIndexValue(self.x, self.y) != 1
 		var tmpY = self.y;
 		tmpY++;
-		if(self.gc.getIndexValue(self.x, tmpY) == 0){ // check with tmp var if the next position is reachable (set 0 in tabPosition)
-			if(self.gc.getIndexValue(self.x, self.y) == "X") // check if it's the start position -> replace "X" with 0
+		if(self.gc.getIndexValue(self.x, tmpY) == 0){
+			if(self.gc.getIndexValue(self.x, self.y) == "X")
 				self.gc.setIndexValue(self.x, self.y, 0);
-			elm.style.top = Number(elm.style.top.replace("px","") ) + 96 + "px"; // move the user
-			self.y++; // update user position
+			elm.style.top = Number(elm.style.top.replace("px","") ) + 96 + "px";
+			self.y++;
 		}
 	} else if(mvt == "ArrowUp"){
-		elm.setAttribute("src","./assets/userTop.png");
 		var tmpY = self.y;
 		tmpY--;
 		if(self.gc.getIndexValue(self.x, tmpY) == 0){
@@ -64,7 +50,6 @@ User.prototype.move = function(mvt){
 			self.y--;
 		}
 	} else if(mvt == "ArrowLeft"){
-		elm.setAttribute("src","./assets/userLeft.png");
 		var tmpX = self.x;
 		tmpX--;
 		if(self.gc.getIndexValue(tmpX, self.y) == 0){
@@ -74,7 +59,6 @@ User.prototype.move = function(mvt){
 			self.x--;
 		}
 	} else if(mvt == "ArrowRight"){
-		elm.setAttribute("src","./assets/userRight.png");
 		var tmpX = self.x;
 		tmpX++;
 		if(self.gc.getIndexValue(tmpX, self.y) == 0){
@@ -84,5 +68,7 @@ User.prototype.move = function(mvt){
 			self.x++;
 		}
 	}
+
+	// console.log(self.);
 
 }
