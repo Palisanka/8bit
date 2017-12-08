@@ -48,10 +48,6 @@ table {
 	border-spacing: 0;
 }
 
-.block {
-	width: 100px;
-}
-
 /***********************************************/
 
 html, body, main {
@@ -61,6 +57,30 @@ html, body, main {
 
 main {
 	background: black;
+	position: relative;
+}
+
+.dialog {
+	position: absolute;
+	font-size: 2em;
+	font-family: 'Press Start 2P', cursive;
+	background: white;
+	border: 1px solid black;
+	padding: 1em;
+}
+
+.dialog:after{
+	position: absolute;
+	width: 92%;
+	height: 87%;
+	content: '';
+	left: 2%;
+	top: 3%;
+	border: 4px solid black;
+}
+
+.block {
+	width: 100px;
 }
 
 .world {

@@ -12,6 +12,7 @@ function User(gameController, index, x, y) {
 	this.x = x;
 	this.y = y;
 
+	// init the user html
 	this.domElm = qs('#user').cloneNode();
 	qs('#user').remove();
 	this.domElm.removeAttribute('hidden');
@@ -21,16 +22,27 @@ function User(gameController, index, x, y) {
 
 	// keybindings
 	var self = this;
-	document.body.addEventListener('keydown', function(e) {
+	document.body.addEventListener('keydown', function(e) { // move
 		if(e.key == "ArrowDown" || e.key == "ArrowUp" || e.key == "ArrowLeft" || e.key == "ArrowRight" ){
 			self.move(e.key);
+			if(gc.dialog != null){
+				gc.dialog.remove();
+				gc.dialog = null;
+			}
+		} else if (e.key == "a") { // interract
+			var tmp = self.y;
+			tmp--; // TODO add avaibility to open dialog from other position (now only top)
+			if (self.gc.getIndexValue(self.x, tmp)!=0 && self.gc.getIndexValue(self.x, tmp) != 1 && self.gc.getIndexValue(self.x, self.y) != "X"){
+				if(gc.dialog==null){
+					gc.dialog = new Dialog(self.gc, self.x, tmp);
+				}
+			}
 		}
 	});
 
 	qs('main').appendChild(this.domElm);
 
 }
-
 
 /**
  * User.prototype.move - function to move the user

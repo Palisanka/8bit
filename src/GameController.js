@@ -12,15 +12,16 @@ function GameController(width, nbX, nbY){
 	this.factorY = this.worldElm.getBoundingClientRect().top - this.width;
 	this.nbX = 12;
 	this.nbY = 8;
+	this.dialog = null;
 	this.tabPosition = [
-		1,1,1,1,1,0,0,1,1,1,1,1,
-		1,1,1,1,1,0,0,1,1,1,1,1,
-		1,1,1,1,1,0,0,1,"X",0,1,1,
-		1,0,0,1,1,0,0,1,0,1,1,1,
-		0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,1,
-		0,0,0,0,0,0,0,0,1,1,0,1,
-		0,0,0,0,0,0,0,0,1,1,0,1,
+		1 , 1 , 1 , 1 , 1 , 0 , 0 , 1 , 1 , 1 , 1 , 1 ,
+		1 , 1 , 1 , 1 , 1 , 0 , 0 , 1 ,"X", 0 , 0 , 1 ,
+		1 ,"$", 1 , 1 , 1 , 0 , 0 , 1 , 0 , 0 , 0 , 0 ,
+		1 , 0 , 0 , 1 , 1 , 0 , 0 , 1 , 0 ,"i", 1 , 1 ,
+		0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 ,
+		0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 ,
+		0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 1 ,
+		0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 1 ,
 	];
 
 }
@@ -70,7 +71,7 @@ GameController.prototype.getIndex = function ( numRow, numColumn ) {
  * @return {type}           the value of tabPosition[index]
  */
 GameController.prototype.getIndexValue = function ( numRow, numColumn ) {
-    return this.tabPosition[this.getIndex(numRow, numColumn) - 1];
+  return this.tabPosition[this.getIndex(numRow, numColumn) - 1];
 }
 
 /**

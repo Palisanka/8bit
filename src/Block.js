@@ -12,5 +12,5 @@ function Block(gameController, index, type, i,j) {
 	this.type = type;
 	this.x = i;
 	this.y = j;
-	qs('main').innerHTML += "<div class='empty' style='left:" + (this.gc.factorX + 96*this.x) + "px; top:" + (this.gc.factorY + 96*this.y) + "px'></div>";
+	qs('main').innerHTML += "<div class='empty' style='left:" + (this.gc.factorX + this.gc.width*this.x) + "px; top:" + (this.gc.factorY + this.gc.width*this.y) + "px'></div>";
 }
