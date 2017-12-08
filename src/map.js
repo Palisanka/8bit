@@ -5,15 +5,10 @@
  * @param  {type} nbX description
  * @param  {type} nbY description
  */
-function Map(nbX, nbY) {
-    this.nbX = nbX;
-    this.nbY = nbY;
-		this.worldElm = qs('.world');
-		this.factorX = this.worldElm.getBoundingClientRect().left;
-		this.factorY = this.worldElm.getBoundingClientRect().top;
-
-		console.log(this.factorX);
-
+function Map(gameController) {
+	this.gc = gameController;
+  this.nbX = gc.nbX;
+  this.nbY = gc.nbY;
 }
 
 
@@ -26,22 +21,17 @@ Map.prototype.init = function(){
 
 	var self = this;
 
-	for (var i = 0; i < this.nbX; i++) {
-		for (var j = 0; j < this.nbY; j++) {
+	for (var y = 1; y < self.nbY+1; y++) {
+		for (var x = 1; x < self.nbX+1; x++) {
 
-			if ( j == 2 && i == 8  ) { // si random est égal à 1 et que le perso1 n'est pas encore sur la map
-				console.log(qs('main'));
-				var str = "<img src='./assets/user0.png' class='user' id='user' style='left:" + (self.factorX + (96 * i)) + "px; top:" + (self.factorY + (96 * j)) + "px'>"
-				qs('main').innerHTML += str;
-				// $carte.append("<div class='casevideClass'></div>");
-				// this.perso1_sur_la_map = true;
-				// tab_position.push(3); // id du perso1
-				// perso1 = $("#perso1");
-			} else { // pour tout autre valeur de random on insert systématiquement une case vide
-					qs('main').innerHTML += "<div class='empty test' style='left:" + (self.factorX + (96 * i)) + "px; top:" + (self.factorY + (96 * j)) + "px'></div>";
-					// tab_position.push(0); // id de la case vide
+			if ( self.gc.getIndexValue(x,y) == "X" ) { // add user
+				new Block(self.gc, self.gc.getIndex(x,y), 0, x, y);
+				self.user = new User(self.gc, self.gc.getIndex(x,y), x, y);
+			} else if ( self.gc.getIndexValue(x,y) == 0 ) { // add freeBlock
+				new Block(self.gc, self.gc.getIndex(x,y), 0, x, y);
+			} else if ( self.gc.getIndexValue(x,y) == 1 ) { // add locked Block
+				new Block(self.gc, self.gc.getIndex(x,y), 1, x, y);
 			}
-			//console.log("case" + " " + i + j);
 		}
 	}
 }
