@@ -1,7 +1,7 @@
 {
-  "name": "treelife",
+  "name": "8bit",
   "version": "0.0.1",
-  "description": "A 2D game life manager",
+  "description": "A minimalist 8bit interface",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,10 +11,9 @@
     "url": ".git"
   },
   "keywords": [
-    "2D",
+    "8bit",
     "game",
-    "life",
-    "management"
+    "minimalist",
   ],
   "author": "Palisanka",
   "license": "ISC"

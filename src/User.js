@@ -22,7 +22,7 @@ function User(gameController, index, x, y) {
 
 	// keybindings
 	var self = this;
-	document.body.addEventListener('keydown', function(e) { // move
+	function keybindings(e){
 		if(e.key == "ArrowDown" || e.key == "ArrowUp" || e.key == "ArrowLeft" || e.key == "ArrowRight" ){
 			self.move(e.key);
 			if(gc.dialog != null){
@@ -30,15 +30,36 @@ function User(gameController, index, x, y) {
 				gc.dialog = null;
 			}
 		} else if (e.key == "a") { // interract
-			var tmp = self.y;
-			tmp--; // TODO add avaibility to open dialog from other position (now only top)
-			if (self.gc.getIndexValue(self.x, tmp)!=0 && self.gc.getIndexValue(self.x, tmp) != 1 && self.gc.getIndexValue(self.x, self.y) != "X"){
-				if(gc.dialog==null){
-					gc.dialog = new Dialog(self.gc, self.x, tmp);
+			if(self != null){
+				var tmp = self.y;
+				tmp--; // TODO add avaibility to open dialog from other position (now only top)
+				if (self.gc.getIndexValue(self.x, tmp)!=0 && self.gc.getIndexValue(self.x, tmp) != 1 && self.gc.getIndexValue(self.x, self.y) != "X"){
+					if(self.gc.getIndexValue(self.x, tmp)==10){ // go home
+						document.body.removeEventListener('keydown', keybindings);
+						self = null;
+						delete self;
+						var home = new GameController("home");
+						home.init();
+					}else if(gc.dialog==null){
+						gc.dialog = new Dialog(self.gc, self.x, tmp);
+					}
+				}
+				tmp+=2;
+				if(self!=null){
+					if (self.gc.getIndexValue(self.x, tmp)!=0 && self.gc.getIndexValue(self.x, tmp) != 1 && self.gc.getIndexValue(self.x, self.y) != "X"){
+						if(self.gc.getIndexValue(self.x, tmp)==11){ // go world
+							document.body.removeEventListener('keydown', keybindings);
+							self = null;
+							delete self;
+							var world = new GameController("world");
+							world.init();
+						}
+					}
 				}
 			}
 		}
-	});
+	}
+	document.body.addEventListener('keydown', keybindings);
 
 	qs('main').appendChild(this.domElm);
 
@@ -62,7 +83,7 @@ User.prototype.move = function(mvt){
 		if(self.gc.getIndexValue(self.x, tmpY) == 0){ // check with tmp var if the next position is reachable (set 0 in tabPosition)
 			if(self.gc.getIndexValue(self.x, self.y) == "X") // check if it's the start position -> replace "X" with 0
 				self.gc.setIndexValue(self.x, self.y, 0);
-			elm.style.top = Number(elm.style.top.replace("px","") ) + 96 + "px"; // move the user
+			elm.style.top = Number(parseInt(elm.style.top.replace("px","") ) + 96) + "px"; // move the user
 			self.y++; // update user position
 		}
 	} else if(mvt == "ArrowUp"){
@@ -72,7 +93,7 @@ User.prototype.move = function(mvt){
 		if(self.gc.getIndexValue(self.x, tmpY) == 0){
 			if(self.gc.getIndexValue(self.x, self.y) == "X")
 				self.gc.setIndexValue(self.x, self.y, 0);
-			elm.style.top = Number(elm.style.top.replace("px","") ) - 96 + "px";
+			elm.style.top = Number(parseInt(elm.style.top.replace("px","") ) - 96) + "px";
 			self.y--;
 		}
 	} else if(mvt == "ArrowLeft"){
@@ -82,7 +103,7 @@ User.prototype.move = function(mvt){
 		if(self.gc.getIndexValue(tmpX, self.y) == 0){
 			if(self.gc.getIndexValue(self.x, self.y) == "X")
 				self.gc.setIndexValue(self.x, self.y, 0);
-			elm.style.left = Number(elm.style.left.replace("px","") ) - 96 + "px";
+			elm.style.left = Number(parseInt(elm.style.left.replace("px","") ) - 96) + "px";
 			self.x--;
 		}
 	} else if(mvt == "ArrowRight"){
@@ -92,7 +113,7 @@ User.prototype.move = function(mvt){
 		if(self.gc.getIndexValue(tmpX, self.y) == 0){
 			if(self.gc.getIndexValue(self.x, self.y) == "X")
 				self.gc.setIndexValue(self.x, self.y, 0);
-			elm.style.left = Number(elm.style.left.replace("px","") ) + 96 + "px";
+			elm.style.left = Number(parseInt(elm.style.left.replace("px","") ) + 96) + "px";
 			self.x++;
 		}
 	}
