@@ -65,13 +65,13 @@ main {
 	font-size: 2em;
 	font-family: 'Press Start 2P', cursive;
 	background: white;
-	border: 1px solid black;
+	border: 7px solid black;
 	padding: 1em;
 }
 
 .dialog:after{
 	position: absolute;
-	width: 92%;
+	width: 94%;
 	height: 87%;
 	content: '';
 	left: 2%;
@@ -92,6 +92,14 @@ main {
 	transform: translate(-50%, -50%);
 }
 
+.home {
+	width: 700px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
 .empty, .user {
 	width: 97px;
 	height: 97px;
@@ -102,4 +110,24 @@ main {
 	border: 1px solid red;
 	left: 120px;
 	top: 70px;
+}
+
+iframe {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 70%;
+	height: 70%;
+	border: 7px solid black
+}
+
+iframe:after {
+	content: '';
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 50px;
+	height: 50px;
+	background: black;
 }

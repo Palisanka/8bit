@@ -5,24 +5,45 @@
  * @param  {number} nbX   the number of X frame
  * @param  {number} nbY   the number of Y frame
  */
-function GameController(width, nbX, nbY){
-	this.width = width;
-	this.worldElm = qs('.world');
+function GameController(place){
+	this.width = 96;
+
+	if(place == "world"){
+		this.worldElm = qs('.world');
+		this.worldElm.removeAttribute("hidden");
+		qs('.home').setAttribute("hidden",true);
+		this.nbX = 12;
+		this.nbY = 8;
+		this.dialog = null;
+		this.tabPosition = [
+			1 , 1 , 1 , 1 , 1 , 0 , 0 , 1 , 10, 1 , 1 , 1 ,
+			1 ,"t", 1 , 1 , 1 , 0 , 0 , 1 , 0 , 0 , 0 , 1 ,
+			1 , 0 , 0 , 0 , 0 , 0 , 0 , 1 ,"X", 0 , 0 , 0 ,
+			1 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 0 ,"i", 1 , 1 ,
+			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 ,
+			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 ,
+			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 1 ,
+			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 1 ,
+		];
+	} else if (place == "home") {
+		this.worldElm = qs('.home');
+		this.worldElm.removeAttribute("hidden");
+		qs('.world').setAttribute("hidden",true);
+		this.nbX = 7;
+		this.nbY = 5;
+		this.dialog = null;
+		this.tabPosition = [
+			1 , 1 ,"m", "n" ,"c", 1 , 1 ,
+			1 , 0 , 0 , 0 , 0 , 0 , 0 ,
+			1 , 0 , 0 , 0 , 0 , 0 , 0 ,
+			0 , 0 , 0 , 0 , 0 , 0 , 1 ,
+			1 , 1 , 1 , 1 ,"X", 1 , 1 ,
+			1 , 1 , 1 , 1 , 11, 1 , 1 ,
+		];
+	}
+
 	this.factorX = this.worldElm.getBoundingClientRect().left - this.width;
 	this.factorY = this.worldElm.getBoundingClientRect().top - this.width;
-	this.nbX = 12;
-	this.nbY = 8;
-	this.dialog = null;
-	this.tabPosition = [
-		1 , 1 , 1 , 1 , 1 , 0 , 0 , 1 , 1 , 1 , 1 , 1 ,
-		1 , 1 , 1 , 1 , 1 , 0 , 0 , 1 ,"X", 0 , 0 , 1 ,
-		1 ,"$", 1 , 1 , 1 , 0 , 0 , 1 , 0 , 0 , 0 , 0 ,
-		1 , 0 , 0 , 1 , 1 , 0 , 0 , 1 , 0 ,"i", 1 , 1 ,
-		0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 ,
-		0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 ,
-		0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 1 ,
-		0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 1 ,
-	];
 
 }
 
@@ -35,6 +56,10 @@ function GameController(width, nbX, nbY){
 GameController.prototype.init = function(){
 
 	var self = this;
+
+	qsa(".empty").forEach(function(e){
+		e.remove();
+	});
 
 	for (var y = 1; y < self.nbY+1; y++) {
 		for (var x = 1; x < self.nbX+1; x++) {
