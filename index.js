@@ -1,3 +1,2 @@
-var blockWidth = 96;
-var gc = new GameController(blockWidth);
+var gc = new GameController("world");
 gc.init();

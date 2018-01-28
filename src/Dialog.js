@@ -31,16 +31,37 @@ function Dialog(gameController, x, y) {
  */
 Dialog.prototype.textContent = function(){
 	var self = this;
-	if(self.gc.getIndexValue(self.x, self.y) == "$"){
-		return "$$$";
+	if(self.gc.getIndexValue(self.x, self.y) == "t"){
+		return "C'est un bien bel arbre ❤️";
 	} else if (self.gc.getIndexValue(self.x, self.y) == "i") {
-		return "Ma maison 😄";
+		var iframeTodo = document.createElement("iframe");
+		iframeTodo.setAttribute("src","./plugins/todo-list/index.html");
+		document.body.addEventListener('click', function(e) { // move
+			iframeTodo.remove();
+			self.remove();
+		});
+		qs("main").appendChild(iframeTodo);
+		return "Une belle todo list !!";
+	} else if (self.gc.getIndexValue(self.x, self.y) == "n") {
+		var iframeNotes = document.createElement("iframe");
+		iframeNotes.setAttribute("src","./plugins/static-laverna/index.html");
+		document.body.addEventListener('click', function(e) { // move
+			iframeNotes.remove();
+			self.remove();
+		});
+		qs("main").appendChild(iframeNotes);
+		return "Mes notes privées 😈";
+	} else if (self.gc.getIndexValue(self.x, self.y) == "m") {
+		return "Money money 😊💰";
+	} else if (self.gc.getIndexValue(self.x, self.y) == "c") {
+		window.open("https://calendar.google.com/calendar/", "_self");
+		return "Google Calendar opened";
 	}
+
 }
 
-
 /**
- * Dialog.prototype.kill - remove the dialog from the DOM
+ * Dialog.prototype.remove - remove the dialog from the DOM
  *
  */
 Dialog.prototype.remove = function(){
